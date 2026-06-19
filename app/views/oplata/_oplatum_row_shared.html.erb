@@ -1,4 +1,6 @@
-<%# app/views/oplata/_recently_paid_row.html.erb %>
+<%# app/views/oplata/_oplatum_row_shared.html.erb %>
+<%# locals: (oplatum:) %>
+
 <div id="<%= dom_id(oplatum) %>" 
      class="grid grid-cols-12 gap-3 px-4 py-3 items-center border-b border-gray-100 text-sm text-gray-700 hover:bg-gray-50 transition group relative"
      data-payment-id="<%= oplatum.id %>">
@@ -8,22 +10,22 @@
     <span class="sr-only">Редактировать запись</span>
   <% end %>
   
-  <%# 1. Дата (2 колонки) %>
+  <%# Дата %>
   <div class="col-span-2 font-medium text-gray-900 relative z-20 pointer-events-none text-sm">
     <%= oplatum.date %>
   </div>
 
-  <%# 2. Название (3 колонки) %>
+  <%# Название %>
   <div class="col-span-3 font-medium truncate pr-1 relative z-20 pointer-events-none text-sm">
     <%= oplatum.name %>
   </div>
 
-  <%# 3. Длительность (1 колонка) %>
+  <%# Длительность %>
   <div class="col-span-1 relative z-20 pointer-events-none text-sm text-center">
     <%= format_duration(oplatum.duration) %>
   </div>
 
-  <%# 4. Способ оплаты (4 колонки) %>
+  <%# Способ оплаты %>
   <div class="col-span-4 relative z-30">
     <%= form_with(model: oplatum, class: "inline-flex w-full", data: { turbo: true }) do |form| %>
       <div class="inline-flex rounded-lg shadow-sm border border-gray-200 overflow-hidden w-full">
@@ -49,7 +51,7 @@
     <% end %>
   </div>
 
-  <%# 5. Чекбокс "Оплачено" + кнопка удаления (2 колонки) %>
+  <%# Действия %>
   <div class="col-span-2 relative z-30 flex items-center justify-end gap-3">
     <%= form_with(model: oplatum, class: "inline-flex items-center", data: { turbo: true }) do |form| %>
       <label class="inline-flex items-center gap-1 cursor-pointer">

@@ -33,7 +33,7 @@
 
       <%# Контейнер для строк %>
       <div id="oplata-rows" class="divide-y divide-gray-100">
-        <%= render partial: "oplata/recently_paid_row", collection: @recently_paid, as: :oplatum %>
+        <%= render partial: "oplata/oplatum_row_shared", collection: @recently_paid, as: :oplatum %>
       </div>
     </div>
   <% else %>

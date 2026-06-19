@@ -74,7 +74,7 @@
   <div class="col-span-2 text-right">Действия</div>
 </div>
       <div id="oplata-rows" class="divide-y divide-gray-100">
-        <%= render partial: "oplata/oplatum_row", collection: unpaid_not_canceled, as: :oplatum %>
+        <%= render partial: "oplata/oplatum_row_shared", collection: unpaid_not_canceled, as: :oplatum %>
       </div>
     </div>
   <% else %>

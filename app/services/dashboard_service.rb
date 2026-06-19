@@ -67,9 +67,10 @@ class DashboardService
     unpaid_lessons.sum { |lesson| calculate_price(lesson) }
   end
 
-  def payment_percentage
-    total_lessons > 0 ? (paid_count.to_f / total_lessons * 100).round(1) : 0
-  end
+def payment_percentage
+  total_active = all_lessons.where(canceled: false).count
+  total_active > 0 ? (paid_count.to_f / total_active * 100).round(1) : 0
+end
 
   def calculate_price(lesson)
     duration = lesson.duration.to_f
