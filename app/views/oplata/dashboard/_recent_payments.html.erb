@@ -1,0 +1,49 @@
+<%# app/views/oplata/dashboard/_recent_payments.html.erb %>
+<div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8">
+  <div class="px-5 py-4 border-b border-gray-200">
+    <h3 class="font-semibold text-gray-700">🕐 Последние оплаты</h3>
+  </div>
+  
+  <% if @dashboard[:recent_payments].any? %>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="bg-gray-50 text-xs text-gray-500 uppercase tracking-wider">
+            <th class="px-5 py-3 text-left">Дата оплаты</th>
+            <th class="px-5 py-3 text-left">Название</th>
+            <th class="px-5 py-3 text-left">Способ</th>
+            <th class="px-5 py-3 text-right">Сумма</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @dashboard[:recent_payments].each do |payment| %>
+            <tr class="border-t border-gray-100 hover:bg-gray-50 transition">
+              <td class="px-5 py-3 text-gray-600">
+                <%= payment.updated_at.strftime("%d.%m.%Y") %>
+              </td>
+              <td class="px-5 py-3 font-medium text-gray-800">
+                <%= payment.name %>
+              </td>
+              <td class="px-5 py-3">
+                <% if payment.payment_destination.present? %>
+                  <span class="text-xs bg-gray-100 px-2.5 py-1 rounded-full text-gray-600">
+                    <%= payment.payment_destination %>
+                  </span>
+                <% else %>
+                  <span class="text-xs text-gray-400">—</span>
+                <% end %>
+              </td>
+              <td class="px-5 py-3 text-right font-medium text-green-600">
+                <%= (1200 * (payment.duration || 1)).to_i.to_s %> ₽
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="p-8 text-center text-gray-400 text-sm">
+      Нет оплат за выбранный месяц
+    </div>
+  <% end %>
+</div>

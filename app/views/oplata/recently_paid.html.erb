@@ -1,0 +1,48 @@
+<% content_for :title, "Недавно оплаченные" %>
+
+<div class="w-full mt-0 pt-0 px-4 sm:px-0">
+  
+  <div class="flex justify-between items-center mb-4">
+    <div class="flex items-center gap-3">
+      <h1 class="font-bold text-2xl sm:text-3xl">Недавно оплаченные</h1>
+      <span class="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+        последние 10
+      </span>
+    </div>
+    
+    <%= link_to oplata_path, 
+        class: "rounded-md px-3 py-2 bg-gray-500 hover:bg-gray-600 text-white font-medium text-sm flex items-center gap-2" do %>
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Назад к платежам
+    <% end %>
+  </div>
+
+  <% if @recently_paid.any? %>
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+
+    <%# Заголовок таблицы - такой же как в index %>
+    <div class="hidden sm:grid grid-cols-12 gap-3 px-4 py-2 bg-gray-50 border-b border-gray-200 text-xs font-semibold uppercase tracking-wider text-gray-500">
+      <div class="col-span-2">Дата</div>
+      <div class="col-span-3">Название</div>
+      <div class="col-span-1 text-center">Длит.</div>
+      <div class="col-span-4 text-center">Способ оплаты</div>
+      <div class="col-span-2 text-right">Действия</div>
+    </div>
+
+      <%# Контейнер для строк %>
+      <div id="oplata-rows" class="divide-y divide-gray-100">
+        <%= render partial: "oplata/recently_paid_row", collection: @recently_paid, as: :oplatum %>
+      </div>
+    </div>
+  <% else %>
+    <div class="text-center py-8 sm:py-12 bg-white rounded-xl border border-gray-200">
+      <svg class="mx-auto h-10 w-10 sm:h-12 sm:w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+      <p class="mt-3 text-gray-500">Нет оплаченных платежей</p>
+      <%= link_to "Вернуться к платежам", oplata_path, class: "mt-3 inline-block text-blue-600 hover:text-blue-800 text-sm" %>
+    </div>
+  <% end %>
+</div>

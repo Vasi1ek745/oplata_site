@@ -1,0 +1,16 @@
+<%# app/views/layouts/_navigation.html.erb %>
+<nav class="bg-white border-b border-gray-200 sticky top-0 z-40">
+  <div class="container mx-auto px-4 sm:px-6">
+    <div class="flex justify-between items-center h-16">
+      <div class="flex-shrink-0">
+        <%= logo_link %>
+      </div>
+
+      <div class="flex gap-1 sm:gap-4">
+        <%= nav_link_to "Платежи", root_path, :payments %>
+        <%= nav_link_to "Дашборд", dashboard_oplata_path, :dashboard %>
+        <%= nav_link_to "PDF Create", pdf_create_path, :pdf %>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,50 @@
+<%# app/views/oplata/dashboard/_payment_methods.html.erb %>
+<div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 mb-8">
+  <h3 class="font-semibold text-gray-700 mb-4">🏦 Способы оплаты</h3>
+  
+  <% total_count = @dashboard[:payment_methods].values.sum { |d| d[:count] } %>
+  
+  <% if total_count > 0 %>
+    <div class="space-y-3">
+      <% 
+        icons = {
+          "Т-Банк" => "💳",
+          "Анна Озон" => "🏦",
+          "Мама Озон" => "🏦"
+        }
+        colors = {
+          "Т-Банк" => "bg-blue-600",
+          "Анна Озон" => "bg-purple-600",
+          "Мама Озон" => "bg-green-600"
+        }
+      %>
+      <% @dashboard[:payment_methods].each do |method, data| %>
+        <div>
+          <div class="flex justify-between items-center text-sm">
+            <span class="text-gray-600 flex items-center gap-1">
+              <span><%= icons[method] || "💳" %></span>
+              <%= method %>
+            </span>
+            <span class="font-medium text-gray-800">
+              <%= data[:count] %> 
+              <span class="text-gray-400 font-normal">
+                (<%= data[:sum].to_i.to_s %> ₽)
+              </span>
+            </span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+            <div class="h-2 rounded-full transition-all <%= colors[method] || "bg-blue-600" %>" 
+                 style="width: <%= total_count > 0 ? (data[:count].to_f / total_count * 100) : 0 %>%">
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="mt-4 text-xs text-gray-400 flex justify-between">
+      <span>Всего оплат: <span class="font-medium text-gray-700"><%= total_count %></span></span>
+      <span>На сумму: <span class="font-medium text-gray-700"><%= @dashboard[:payment_methods].values.sum { |d| d[:sum] }.to_i.to_s %> ₽</span></span>
+    </div>
+  <% else %>
+    <p class="text-gray-400 text-sm text-center py-4">Нет оплат за выбранный месяц</p>
+  <% end %>
+</div>

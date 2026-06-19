@@ -1,0 +1,74 @@
+<%# app/views/oplata/_recently_paid_row.html.erb %>
+<div id="<%= dom_id(oplatum) %>" 
+     class="grid grid-cols-12 gap-3 px-4 py-3 items-center border-b border-gray-100 text-sm text-gray-700 hover:bg-gray-50 transition group relative"
+     data-payment-id="<%= oplatum.id %>">
+  
+  <%# Ссылка на редактирование %>
+  <%= link_to edit_oplatum_path(oplatum), class: "absolute inset-0 z-10" do %>
+    <span class="sr-only">Редактировать запись</span>
+  <% end %>
+  
+  <%# 1. Дата (2 колонки) %>
+  <div class="col-span-2 font-medium text-gray-900 relative z-20 pointer-events-none text-sm">
+    <%= oplatum.date %>
+  </div>
+
+  <%# 2. Название (3 колонки) %>
+  <div class="col-span-3 font-medium truncate pr-1 relative z-20 pointer-events-none text-sm">
+    <%= oplatum.name %>
+  </div>
+
+  <%# 3. Длительность (1 колонка) %>
+  <div class="col-span-1 relative z-20 pointer-events-none text-sm text-center">
+    <%= format_duration(oplatum.duration) %>
+  </div>
+
+  <%# 4. Способ оплаты (4 колонки) %>
+  <div class="col-span-4 relative z-30">
+    <%= form_with(model: oplatum, class: "inline-flex w-full", data: { turbo: true }) do |form| %>
+      <div class="inline-flex rounded-lg shadow-sm border border-gray-200 overflow-hidden w-full">
+        <% [
+          ["Т-Банк", "💳 Т-Банк"],
+          ["Анна Озон", "🏦 Анна Озон"],
+          ["Мама Озон", "🏦 Мама Озон"]
+        ].each_with_index do |(value, label), index| %>
+          <label class="flex-1 cursor-pointer <%= index > 0 ? '-ml-px' : '' %>">
+            <%= form.radio_button :payment_destination, value, 
+                class: "hidden peer",
+                checked: oplatum.payment_destination == value,
+                onchange: "this.closest('form').requestSubmit();" %>
+            <span class="block text-center px-1 py-1 text-xs font-medium transition 
+              peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600 hover:bg-gray-50 
+              <%= oplatum.payment_destination == value ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700' %>
+              <%= index > 0 ? 'border-l border-gray-200' : '' %> w-full">
+              <%= label %>
+            </span>
+          </label>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <%# 5. Чекбокс "Оплачено" + кнопка удаления (2 колонки) %>
+  <div class="col-span-2 relative z-30 flex items-center justify-end gap-3">
+    <%= form_with(model: oplatum, class: "inline-flex items-center", data: { turbo: true }) do |form| %>
+      <label class="inline-flex items-center gap-1 cursor-pointer">
+        <%= form.check_box :pay, 
+            class: "w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded cursor-pointer",
+            onchange: "this.form.requestSubmit();" %>
+        <span class="text-xs <%= oplatum.pay ? 'text-green-600 font-medium' : 'text-gray-500' %>">
+          <%= oplatum.pay ? "Оплачено" : "Отметить" %>
+        </span>
+      </label>
+    <% end %>
+
+    <%= button_to oplatum, 
+        method: :delete,
+        class: "inline-flex items-center p-1 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-md transition",
+        data: { turbo_confirm: "Удалить запись?" } do %>
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+      </svg>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,98 @@
+<%= form_with(model: oplatum, class: "contents") do |form| %>
+  <div class="bg-white rounded-xl shadow-md border border-gray-100 p-8">
+    
+    <% if oplatum.errors.any? %>
+      <div class="bg-red-50 border-l-4 border-red-500 text-red-700 px-4 py-3 rounded mb-6">
+        <p class="font-medium"><%= pluralize(oplatum.errors.count, "ошибка") %></p>
+        <ul class="text-sm list-disc ml-6">
+          <% oplatum.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <%= form.label :name, class: "block text-sm font-semibold text-gray-600 uppercase tracking-wider mb-2" do %>
+          <span class="inline-flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Название <span class="text-red-500">*</span>
+          </span>
+        <% end %>
+        <%= form.text_field :name, 
+            required: true,
+            class: "block w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-base px-5 py-3.5",
+            placeholder: "Введите название занятия" %>
+        <% if oplatum.errors[:name].any? %>
+          <p class="text-red-500 text-sm mt-1"><%= oplatum.errors[:name].join(", ") %></p>
+        <% end %>
+      </div>
+
+      <div>
+        <%= form.label :date, class: "block text-sm font-semibold text-gray-600 uppercase tracking-wider mb-2" do %>
+          <span class="inline-flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            Дата
+          </span>
+        <% end %>
+        <%= form.date_field :date, 
+            value: oplatum.date || Date.today,
+            required: true,
+            class: "block w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-base px-5 py-3.5" %>
+      </div>
+
+      <div>
+        <%= form.label :duration, class: "block text-sm font-semibold text-gray-600 uppercase tracking-wider mb-2" do %>
+          <span class="inline-flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Длительность
+          </span>
+        <% end %>
+        <div class="inline-flex rounded-lg shadow-sm border border-gray-200 overflow-hidden w-full md:w-auto">
+          <% [[1, "1 час"], [1.5, "1.5 часа"], [2, "2 часа"]].each_with_index do |(value, label), index| %>
+            <label class="flex-1 md:flex-none cursor-pointer <%= index > 0 ? '-ml-px' : '' %>">
+              <%= form.radio_button :duration, value, class: "hidden peer", checked: (oplatum.duration == value || (oplatum.duration.blank? && value == 1)) %>
+              <span class="block text-center px-6 py-3 text-base font-medium transition peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600 bg-white text-gray-700 hover:bg-gray-50 w-full <%= index > 0 ? 'border-l border-gray-200' : '' %>">
+                <%= label %>
+              </span>
+            </label>
+          <% end %>
+        </div>
+      </div>
+
+      <div>
+        <%= form.label :pay, class: "block text-sm font-semibold text-gray-600 uppercase tracking-wider mb-2" do %>
+          <span class="inline-flex items-center gap-2">
+            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Оплачено
+          </span>
+        <% end %>
+        <div class="flex items-center gap-6 mt-1.5">
+          <label class="inline-flex items-center cursor-pointer">
+            <%= form.radio_button :pay, true, class: "w-5 h-5 text-green-600 focus:ring-green-500 border-gray-300" %>
+            <span class="ml-2 text-base text-gray-700">Да</span>
+          </label>
+          <label class="inline-flex items-center cursor-pointer">
+            <%= form.radio_button :pay, false, class: "w-5 h-5 text-gray-600 focus:ring-gray-500 border-gray-300", checked: oplatum.pay != true %>
+            <span class="ml-2 text-base text-gray-700">Нет</span>
+          </label>
+        </div>
+        <p class="text-xs text-gray-400 mt-1">По умолчанию: Не оплачено</p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-4 mt-8 pt-6 border-t border-gray-200">
+      <%= form.submit "Сохранить", class: "inline-flex items-center gap-2 rounded-lg px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white text-base font-medium cursor-pointer transition shadow-sm" %>
+      <%= link_to "Отмена", oplata_path, class: "text-gray-500 hover:text-gray-700 text-base font-medium transition px-4 py-2" %>
+    </div>
+  </div>
+<% end %>

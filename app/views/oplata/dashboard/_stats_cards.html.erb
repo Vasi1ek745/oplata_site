@@ -1,0 +1,92 @@
+<%# app/views/oplata/dashboard/_stats_cards.html.erb %>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+  
+  <%# Карточка: Всего занятий %>
+  <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 hover:shadow-md transition">
+    <div class="flex items-center justify-between">
+      <div>
+        <p class="text-sm text-gray-500 font-medium">Всего занятий</p>
+        <p class="text-3xl font-bold text-gray-800 mt-1"><%= @dashboard[:total_lessons] %></p>
+      </div>
+      <div class="bg-blue-100 rounded-full p-3">
+        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+        </svg>
+      </div>
+    </div>
+    <div class="mt-3 flex items-center gap-2 text-xs text-gray-500">
+      <span>✅ <%= @dashboard[:paid_count] %> оплачено</span>
+      <span>•</span>
+      <span>⏳ <%= @dashboard[:unpaid_count] %> не оплачено</span>
+      <span>•</span>
+      <span>🚫 <%= @dashboard[:canceled_count] %> отменено</span>
+    </div>
+  </div>
+
+  <%# Карточка: Доход %>
+  <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 hover:shadow-md transition">
+    <div class="flex items-center justify-between">
+      <div>
+        <p class="text-sm text-gray-500 font-medium">💰 Доход</p>
+        <p class="text-3xl font-bold text-green-600 mt-1">
+          <%= @dashboard[:total_income].to_i.to_s + " ₽" %>
+        </p>
+      </div>
+      <div class="bg-green-100 rounded-full p-3">
+        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+    </div>
+    <div class="mt-3 text-xs text-gray-500">
+      <%= @dashboard[:paid_count] %> оплаченных занятий (с учетом длительности)
+    </div>
+  </div>
+
+  <%# Карточка: Долг %>
+  <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 hover:shadow-md transition">
+    <div class="flex items-center justify-between">
+      <div>
+        <p class="text-sm text-gray-500 font-medium">⏳ Текущий долг</p>
+        <p class="text-3xl font-bold text-red-600 mt-1">
+          <%= @dashboard[:total_debt].to_i.to_s + " ₽" %>
+        </p>
+      </div>
+      <div class="bg-red-100 rounded-full p-3">
+        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+    </div>
+    <div class="mt-3 text-xs text-gray-500">
+      <%= @dashboard[:unpaid_count] %> неоплаченных занятий (с учетом длительности)
+    </div>
+  </div>
+
+  <%# Карточка: Процент оплат %>
+  <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 hover:shadow-md transition">
+    <div class="flex items-center justify-between">
+      <div>
+        <p class="text-sm text-gray-500 font-medium">📈 Процент оплат</p>
+        <p class="text-3xl font-bold text-blue-600 mt-1">
+          <%= @dashboard[:payment_percentage] %>% 
+        </p>
+      </div>
+      <div class="bg-blue-100 rounded-full p-3">
+        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+        </svg>
+      </div>
+    </div>
+    <div class="mt-3">
+      <div class="w-full bg-gray-200 rounded-full h-2">
+        <div class="bg-blue-600 h-2 rounded-full transition-all" style="width: <%= @dashboard[:payment_percentage] %>%"></div>
+      </div>
+      <div class="flex justify-between text-xs text-gray-500 mt-1">
+        <span><%= @dashboard[:paid_count] %> оплачено</span>
+        <span><%= @dashboard[:total_lessons] %> всего</span>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+
+@import "tailwindcss";
+
+@keyframes slideOut {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+    max-height: 100px;
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateX(10px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-100%);
+    max-height: 0;
+    padding: 0;
+    margin: 0;
+    border-width: 0;
+  }
+}
+
+.turbo-stream-remove {
+  animation: slideOut 2.5s ease-in-out forwards;
+  overflow: hidden;
+}

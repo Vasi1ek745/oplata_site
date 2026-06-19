@@ -1,0 +1,35 @@
+<%# app/views/oplata/dashboard/_month_switcher.html.erb %>
+<div class="flex items-center justify-between mb-6 bg-white rounded-xl shadow-sm border border-gray-200 p-3">
+  <div class="flex items-center gap-3">
+    <%= link_to dashboard_oplata_path(month: (Date.parse(@dashboard[:selected_month]) - 1.month).strftime("%Y-%m-%d")), 
+                class: "p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition" do %>
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+    <% end %>
+    
+    <span class="text-sm font-medium text-gray-700 min-w-[120px] text-center">
+      <%= @dashboard[:current_month] %>
+    </span>
+    
+    <% if Date.parse(@dashboard[:selected_month]) < Date.today.beginning_of_month %>
+      <%= link_to dashboard_oplata_path(month: (Date.parse(@dashboard[:selected_month]) + 1.month).strftime("%Y-%m-%d")), 
+                  class: "p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition" do %>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      <% end %>
+    <% else %>
+      <div class="p-2 text-gray-200 cursor-not-allowed">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </div>
+    <% end %>
+  </div>
+  <div class="text-xs text-gray-400">
+    <span class="hidden sm:inline">Всего за месяц: </span>
+    <span class="font-medium text-gray-700"><%= @dashboard[:paid_count] %></span>
+    оплат
+  </div>
+</div>
