@@ -13,7 +13,9 @@ RUN gem install bundler
 WORKDIR /rails
 
 COPY Gemfile Gemfile.lock ./
-RUN bundle install --without development test
+
+# ✅ ИСПРАВЛЕНО: используем bundle config
+RUN bundle config set without 'development test' && bundle install
 
 COPY . .
 
