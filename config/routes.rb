@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root "oplata#index"
-  
+  get "up" => "rails/health#show", as: :rails_health_check
   resources :oplata do
     collection do 
       get :refresh_data
