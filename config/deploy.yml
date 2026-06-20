@@ -3,12 +3,8 @@ image: oplata_site
 
 servers:
   web:
-    - 194.87.98.136
-    volumes:
-      - /home/vasiliy/Изображения:/rails/public/images
-
-proxy:
-  app_port: 3000
+    hosts:
+      - 194.87.98.136
 
 ssh:
   user: vasiliy
@@ -23,7 +19,6 @@ env:
     RAILS_ENV: production
     PORT: 3000
     RAILS_SERVE_STATIC_FILES: "true"
-
   secret:
     - RAILS_MASTER_KEY
     - SECRET_KEY_BASE
@@ -31,3 +26,12 @@ env:
 builder:
   arch: amd64
   dockerfile: Dockerfile
+
+volumes:
+  - "/home/vasiliy/images:home/vasiliy/Изображения/Новая папка"
+proxy:  
+   healthcheck:
+    path: /up             # путь проверки
+    interval: 5           # интервал между проверками в секундах
+    timeout: 15           # таймаут ожидания ответа приложения
+  

@@ -22,5 +22,5 @@ COPY . .
 RUN SECRET_KEY_BASE=dummy RAILS_ENV=production ./bin/rails assets:precompile
 
 EXPOSE 3000
-
+RUN bin/rails db:create db:migrate
 CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
