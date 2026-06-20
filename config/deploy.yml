@@ -3,14 +3,7 @@ image: oplata_site
 
 servers:
   web:
-    hosts:
-      - 194.87.98.136
-    healthcheck:
-      path: /up
-      port: 3000
-      interval: 5
-      timeout: 3
-      retries: 3
+    - 194.87.98.136
 
 ssh:
   user: vasiliy
@@ -28,3 +21,8 @@ env:
   clear:
     RAILS_ENV: production
     PORT: 3000
+
+# ✅ ДОБАВЛЯЕМ BUILDER С ARCH
+builder:
+  arch: amd64
+  dockerfile: Dockerfile
