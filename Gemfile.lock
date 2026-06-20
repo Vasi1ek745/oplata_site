@@ -451,6 +451,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   kamal
+  matrix (~> 0.4.3)
   mini_magick (~> 5.3)
   prawn (~> 2.4)
   propshaft

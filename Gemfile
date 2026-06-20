@@ -66,3 +66,5 @@ gem "tzinfo", "~> 2.0"
 gem "prawn", "~> 2.4"
 
 gem "mini_magick", "~> 5.3"
+
+gem "matrix", "~> 0.4.3"
