@@ -18,8 +18,7 @@ env:
     RAILS_ENV: production
     PORT: 3000
 
-# ✅ Добавляем healthcheck
-healthcheck:
+health_check:
   path: /up
   port: 3000
   interval: 5
