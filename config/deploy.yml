@@ -1,7 +1,5 @@
 service: oplata_site
-
 image: oplata_site
-
 servers:
   web:
     - 194.87.98.136
@@ -11,7 +9,6 @@ registry:
   server: localhost:5000
   username: dummy
   password: dummy
-
 env:
   secret:
     - RAILS_MASTER_KEY
@@ -21,16 +18,10 @@ env:
     RAILS_ENV: production
     PORT: 3000
 
-accessories: {}
-
-asset_path: /rails/public/assets
-
-builder:
-  arch: amd64
-  dockerfile: Dockerfile
-
-logging:
-  driver: json-file
-  options:
-    max-size: "100m"
-    max-file: "3"
+# ✅ Добавляем healthcheck
+healthcheck:
+  path: /up
+  port: 3000
+  interval: 5
+  timeout: 3
+  retries: 3
