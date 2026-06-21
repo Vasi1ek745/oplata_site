@@ -6,7 +6,7 @@ servers:
     hosts:
       - 194.87.98.136
 
-deploy_timeout: 90
+deploy_timeout: 240
 
 ssh:
   user: vasiliy
