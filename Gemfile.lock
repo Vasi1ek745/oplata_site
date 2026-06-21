@@ -121,14 +121,6 @@ GEM
       logger
     faraday-net_http (3.4.2)
       net-http (~> 0.5)
-    ffi (1.17.3-aarch64-linux-gnu)
-    ffi (1.17.3-aarch64-linux-musl)
-    ffi (1.17.3-arm-linux-gnu)
-    ffi (1.17.3-arm-linux-musl)
-    ffi (1.17.3-arm64-darwin)
-    ffi (1.17.3-x86_64-darwin)
-    ffi (1.17.3-x86_64-linux-gnu)
-    ffi (1.17.3-x86_64-linux-musl)
     fileutils (1.8.0)
     fugit (1.12.1)
       et-orbi (~> 1.4)
@@ -147,9 +139,7 @@ GEM
       ice_cube (~> 0.16)
       tzinfo (~> 2.0)
     ice_cube (0.17.0)
-    image_processing (1.14.0)
-      mini_magick (>= 4.9.5, < 6)
-      ruby-vips (>= 2.0.17, < 3)
+    image_processing (2.0.2)
     importmap-rails (2.2.3)
       actionpack (>= 6.0.0)
       activesupport (>= 6.0.0)
@@ -337,9 +327,6 @@ GEM
       rubocop-performance (>= 1.24)
       rubocop-rails (>= 2.30)
     ruby-progressbar (1.13.0)
-    ruby-vips (2.3.0)
-      ffi (~> 1.12)
-      logger
     rubyzip (3.2.2)
     securerandom (0.4.1)
     selenium-webdriver (4.41.0)
@@ -447,7 +434,7 @@ DEPENDENCIES
   fileutils (~> 1.8)
   icalendar (~> 2.12)
   icalendar-recurrence (~> 1.2)
-  image_processing (~> 1.2)
+  image_processing (~> 2.0)
   importmap-rails
   jbuilder
   kamal
