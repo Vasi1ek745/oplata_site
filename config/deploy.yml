@@ -6,6 +6,8 @@ servers:
     hosts:
       - 194.87.98.136
 
+deploy_timeout: 90
+
 ssh:
   user: vasiliy
 
@@ -28,10 +30,14 @@ builder:
   dockerfile: Dockerfile
 
 volumes:
-  - "/home/vasiliy/images:home/vasiliy/Изображения/Новая папка"
+  - "/home/vasiliy/oplata_storage:/rails/storage"
+  - "/home/vasiliy/images:/home/vasiliy/images"
 proxy:  
-   healthcheck:
+  host: 194.87.98.136
+  app_port: 3000
+  ssl: false
+  healthcheck:
     path: /up             # путь проверки
     interval: 5           # интервал между проверками в секундах
-    timeout: 15           # таймаут ожидания ответа приложения
+    timeout: 3           # таймаут ожидания ответа приложения
   

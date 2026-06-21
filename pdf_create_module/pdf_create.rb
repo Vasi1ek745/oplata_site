@@ -4,31 +4,30 @@ require "fileutils"
 
 class PdfGenerator
 def initialize
-  # Определяем корневую папку проекта
   @root_path = Rails.root || Pathname.new(File.expand_path('../..', __FILE__))
   
-  # ✅ УНИВЕРСАЛЬНЫЙ ПУТЬ
-  # Проверяем, есть ли папка в проекте (для локальной разработки)
-  local_path = @root_path.join('public', 'images', 'Новая папка')
+  # ✅ ПРОВЕРЯЕМ ОБА ПУТИ
+  local_path = "/home/vasiliy/Изображения/Новая папка"
+  server_path = "/home/vasiliy/images"
   
-  # Если в проекте нет, используем абсолютный путь (для сервера)
   if Dir.exist?(local_path)
-    @image_path = local_path.to_s
+    @image_path = local_path
+  elsif Dir.exist?(server_path)
+    @image_path = server_path
   else
-    @image_path = "/home/vasiliy/images"
+    # Если ничего не найдено — используем путь внутри проекта
+    @image_path = @root_path.join('public', 'images').to_s
+    Rails.logger.warn "❌ Папка с изображениями не найдена! Использую: #{@image_path}"
   end
+  
+  Rails.logger.info "📂 Путь к изображениям: #{@image_path}"
   
   # Путь к шрифтам
   @font_path = @root_path.join('pdf_create_module', 'fonts')
   
   # Путь для сохранения PDF
   @output_path = @root_path.join('pdf_create_module', 'pdf')
-  
-  # Создаем папку для PDF если её нет
   FileUtils.mkdir_p(@output_path)
-  
-  # Логируем, какой путь используется
-  Rails.logger.info "📂 Путь к изображениям: #{@image_path}"
 end
 
   # Генерация PDF с параметрами
